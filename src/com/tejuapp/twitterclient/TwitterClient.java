@@ -1,7 +1,7 @@
-package com.codepath.apps.restclienttemplate;
+package com.tejuapp.twitterclient;
 
 import org.scribe.builder.api.Api;
-import org.scribe.builder.api.FlickrApi;
+import org.scribe.builder.api.TwitterApi;
 
 import android.content.Context;
 
@@ -21,18 +21,25 @@ import com.loopj.android.http.RequestParams;
  * NOTE: You may want to rename this object based on the service i.e TwitterClient or FlickrClient
  * 
  */
-public class RestClient extends OAuthBaseClient {
-	public static final Class<? extends Api> REST_API_CLASS = FlickrApi.class; // Change this
-	public static final String REST_URL = "http://api.flickr.com/services"; // Change this, base API URL
-	public static final String REST_CONSUMER_KEY = "SOME_KEY";       // Change this
-	public static final String REST_CONSUMER_SECRET = "SOME_SECRET"; // Change this
-	public static final String REST_CALLBACK_URL = "oauth://cprest"; // Change this (here and in manifest)
+public class TwitterClient extends OAuthBaseClient {
+	public static final Class<? extends Api> REST_API_CLASS = TwitterApi.class; // Change this
+	public static final String REST_URL = "https://api.twitter.com/1.1"; // Change this, base API URL
+	public static final String REST_CONSUMER_KEY = "Hnzfqqwne29rFmCo3Ldyp6rkd";       // Change this
+	public static final String REST_CONSUMER_SECRET = "kHHLdB5CLzVi4fk3NOXAXYboiIlWCeEJcTqbczJMz5cCPPTQun"; // Change this
+	public static final String REST_CALLBACK_URL = "oauth://cptwitterclient"; // Change this (here and in manifest)
 
-	public RestClient(Context context) {
+	public TwitterClient(Context context) {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
+	
+	public void getHomeTimeline(AsyncHttpResponseHandler handler){
+		String apiUrl = getApiUrl("statuses/home_timeline.json");
+		RequestParams params = new RequestParams();
+		params.put("since_id","1");
+		client.get(apiUrl, params, handler);
+	}
 
-	// CHANGE THIS
+	/*// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here
 	public void getInterestingnessList(AsyncHttpResponseHandler handler) {
 		String apiUrl = getApiUrl("?nojsoncallback=1&method=flickr.interestingness.getList");
@@ -40,7 +47,7 @@ public class RestClient extends OAuthBaseClient {
 		RequestParams params = new RequestParams();
 		params.put("format", "json");
 		client.get(apiUrl, params, handler);
-	}
+	}*/
 
 	/* 1. Define the endpoint URL with getApiUrl and pass a relative path to the endpoint
 	 * 	  i.e getApiUrl("statuses/home_timeline.json");

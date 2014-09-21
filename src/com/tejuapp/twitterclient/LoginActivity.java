@@ -1,12 +1,14 @@
-package com.codepath.apps.restclienttemplate;
+package com.tejuapp.twitterclient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 
 import com.codepath.oauth.OAuthLoginActivity;
+import com.tejuapp.twitterclient.R;
 
-public class LoginActivity extends OAuthLoginActivity<RestClient> {
+public class LoginActivity extends OAuthLoginActivity<TwitterClient> {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,8 +27,9 @@ public class LoginActivity extends OAuthLoginActivity<RestClient> {
 	// i.e Display application "homepage"
 	@Override
 	public void onLoginSuccess() {
-		// Intent i = new Intent(this, PhotosActivity.class);
-		// startActivity(i);
+		Intent i = new Intent(this, TimelineActivity.class);
+		startActivity(i);
+		//Toast.makeText(this, "Login Successful!", Toast.LENGTH_SHORT).show();
 	}
 
 	// OAuth authentication flow failed, handle the error

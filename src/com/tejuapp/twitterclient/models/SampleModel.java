@@ -1,4 +1,4 @@
-package com.codepath.apps.restclienttemplate.models;
+package com.tejuapp.twitterclient.models;
 
 import java.util.List;
 
