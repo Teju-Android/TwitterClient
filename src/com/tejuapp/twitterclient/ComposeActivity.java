@@ -38,9 +38,9 @@ public class ComposeActivity extends Activity {
 		setContentView(R.layout.activity_compose);
 		client = TwitterApplication.getRestClient();
 		user = (User) getIntent().getSerializableExtra("user");
-		
+		getActionBar().hide();
 		// Show the Up button in the action bar.
-		setupActionBar();
+		//setupActionBar();
 		setupActivity();
 		setupComposeListener();
 	}
@@ -48,7 +48,7 @@ public class ComposeActivity extends Activity {
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
-	private void setupActionBar() {
+	/*private void setupActionBar() {
 		ActionBar actionBar = getActionBar();
 	    actionBar.setDisplayHomeAsUpEnabled(false);
 	    actionBar.setHomeButtonEnabled(false);
@@ -57,6 +57,7 @@ public class ComposeActivity extends Activity {
 	    actionBar.setCustomView(R.layout.compose_actionbar_view);
 	    actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        actionBar.hide();
         View v = actionBar.getCustomView();
         btTweet = (Button)v.findViewById(R.id.btTweet);
         btTweet.setOnClickListener(new OnClickListener(){
@@ -75,7 +76,7 @@ public class ComposeActivity extends Activity {
 				}
 			}
         });
-	}
+	}*/
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -89,6 +90,7 @@ public class ComposeActivity extends Activity {
 		tvName = (TextView) findViewById(R.id.tvComposeUserName);
 		tvScreenName = (TextView) findViewById(R.id.tvComposeScreenName);
 		etCompose = (EditText) findViewById(R.id.etCompose);
+		btTweet = (Button) findViewById(R.id.btTweet);
 		
 		ivProfileImage.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
@@ -110,7 +112,7 @@ public class ComposeActivity extends Activity {
 		}
 	}
 	
-	private void setupComposeListener(){
+	public void setupComposeListener(){
 		etCompose.addTextChangedListener(new TextWatcher(){
 	        public void afterTextChanged(Editable s) {
 	            String tweet = etCompose.getText().toString();
@@ -139,6 +141,20 @@ public class ComposeActivity extends Activity {
 				Log.d("DEBUG",s.toString());
 			}
 		}, status);
+	}
+	
+	public void onPostTweet(View v) {
+		String tweetText = etCompose.getText().toString();
+		if(tweetText.isEmpty()){
+			Toast.makeText(getBaseContext(), "Compose and Tweet", Toast.LENGTH_SHORT).show();
+		}
+		else{
+			postTweet(tweetText);
+			Intent i = new Intent();
+			i.putExtra("tweet", tweetText);
+			setResult(RESULT_OK,i);
+			finish();
+		}
 	}
 
 }
