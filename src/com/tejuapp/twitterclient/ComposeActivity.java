@@ -1,16 +1,24 @@
 package com.tejuapp.twitterclient;
 
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tejuapp.twitterclient.models.User;
 
@@ -21,16 +29,20 @@ public class ComposeActivity extends Activity {
 	private TextView tvName;
 	private TextView tvScreenName;
 	private EditText etCompose;
+	private Button btTweet;
+	private TwitterClient client;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compose);
+		client = TwitterApplication.getRestClient();
 		user = (User) getIntent().getSerializableExtra("user");
 		
 		// Show the Up button in the action bar.
 		setupActionBar();
 		setupActivity();
+		setupComposeListener();
 	}
 
 	/**
@@ -41,9 +53,28 @@ public class ComposeActivity extends Activity {
 	    actionBar.setDisplayHomeAsUpEnabled(false);
 	    actionBar.setHomeButtonEnabled(false);
 	    actionBar.setDisplayUseLogoEnabled(false);
+	    actionBar.setDisplayShowHomeEnabled(false);
 	    actionBar.setCustomView(R.layout.compose_actionbar_view);
 	    actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
+        View v = actionBar.getCustomView();
+        btTweet = (Button)v.findViewById(R.id.btTweet);
+        btTweet.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				String tweetText = etCompose.getText().toString();
+				if(tweetText.isEmpty()){
+					Toast.makeText(getBaseContext(), "Compose and Tweet", Toast.LENGTH_SHORT).show();
+				}
+				else{
+					postTweet(tweetText);
+					Intent i = new Intent();
+					i.putExtra("tweet", tweetText);
+					setResult(RESULT_OK,i);
+					finish();
+				}
+			}
+        });
 	}
 
 	@Override
@@ -77,6 +108,37 @@ public class ComposeActivity extends Activity {
 			setResult(RESULT_OK,i);
 			finish();
 		}
+	}
+	
+	private void setupComposeListener(){
+		etCompose.addTextChangedListener(new TextWatcher(){
+	        public void afterTextChanged(Editable s) {
+	            String tweet = etCompose.getText().toString();
+	            if(tweet.isEmpty()){
+	            	btTweet.setBackgroundResource(R.drawable.tweet_false);
+	            }
+	            else{
+	            	btTweet.setBackgroundResource(R.drawable.tweet_true);
+	            } 	
+	        }
+	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+	        public void onTextChanged(CharSequence s, int start, int before, int count){}
+	    }); 
+	}
+	
+	public void postTweet(String status){
+		client.postUpdateTweet(new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(JSONObject json) {
+				Log.d("DEBUG","USER>> POSTED!!!");
+			}
+			
+			@Override
+			public void onFailure(Throwable e, String s) {
+				Log.d("DEBUG",e.toString());
+				Log.d("DEBUG",s.toString());
+			}
+		}, status);
 	}
 
 }

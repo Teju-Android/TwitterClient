@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <!--
         Base application theme, dependent on API level. This theme is replaced
@@ -17,5 +17,17 @@
         <item name="android:actionBarStyle">@style/TwitterActionBar</item>
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style> 
+    
+    <style name="ptr_text">
+    <!-- Change the text style and color -->
+    <item name="android:textStyle">bold|italic</item>
+    <item name="android:textColor">#cccccc</item>
+	</style>
+	
+    <style name="white_bg" parent="android:Widget.ActionBar">
+        <item name="android:background">#ffffff</item>
+        </style>
+
+    
 
 </resources>

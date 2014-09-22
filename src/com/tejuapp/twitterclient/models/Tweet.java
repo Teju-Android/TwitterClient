@@ -15,7 +15,7 @@ import android.util.Log;
 
 public class Tweet {
 	private String body;
-	private long id;
+	private String id;
 	private String createdAt;
 	private User user;
 	private Date timestamp;
@@ -27,10 +27,10 @@ public class Tweet {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public long getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getCreatedAt() {
@@ -59,7 +59,7 @@ public class Tweet {
 		Tweet tweet = new Tweet();
 		try {
 			tweet.body = json.getString("text");
-			tweet.id = json.getLong("id");
+			tweet.id = json.getString("id_str");
 			tweet.createdAt = json.getString("created_at");
 			tweet.user = User.fromJSONToUser(json.getJSONObject("user"));
 			tweet.timestamp = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy").parse(tweet.createdAt);

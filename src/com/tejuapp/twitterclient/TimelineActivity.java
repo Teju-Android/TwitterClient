@@ -5,35 +5,45 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tejuapp.twitterclient.adapter.TweetArrayAdapter;
+import com.tejuapp.twitterclient.listener.EndlessScrollListener;
 import com.tejuapp.twitterclient.models.Tweet;
 import com.tejuapp.twitterclient.models.User;
+
+import eu.erikw.PullToRefreshListView;
+import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class TimelineActivity extends Activity {
 	
 	private TwitterClient client;
 	private ArrayList<Tweet> tweets;
 	private ArrayAdapter<Tweet> aTweets;
-	private ListView lvTweets;
+	private PullToRefreshListView lvTweets;
 	private User currentUser;
+	private String lastTweetId=null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_timeline);
-		setupActivity();
 		client = TwitterApplication.getRestClient();
-		populateTimeline();
+		ActionBar actionBar = getActionBar();
+	    actionBar.setDisplayShowTitleEnabled(false);
+	    
+	    setupActivity();
+//		populateTimeline();
 		getAccountDetails();
 	}
 
@@ -45,10 +55,40 @@ public class TimelineActivity extends Activity {
 	}
 	
 	private void setupActivity(){
-		lvTweets = (ListView) findViewById(R.id.lvTweets);
+		lvTweets = (PullToRefreshListView) findViewById(R.id.lvTweets);
 		tweets = new ArrayList<Tweet>();
 		aTweets = new TweetArrayAdapter(this, tweets);
 		lvTweets.setAdapter(aTweets);
+		lvTweets.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                // Your code to refresh the list here.
+                // Make sure you call listView.onRefreshComplete() when
+                // once the network request has completed successfully.
+            	tweets.clear();
+            	lastTweetId = null;
+                populateTimeline();
+            }
+        });
+		
+		lvTweets.setOnScrollListener(new EndlessScrollListener() {
+		    @Override
+		    public void onLoadMore(int page, int totalItemsCount) {
+	                // Triggered only when new data needs to be appended to the list
+	                // Add whatever code is needed to append new items to your AdapterView
+		    	populateTimeline();
+		    }
+		});
+		
+		/*lvTweets.setOnClickListener(new OnClickListener(){
+			@Override
+	        public void onClick(View v) {
+				Intent i = new Intent(getBaseContext(), ViewTweetActivity.class);
+	      		i.putExtra("tweet", this.);
+	      		startActivityForResult(i, 5);
+	              
+	          }
+		});*/
 	}
 	
 	public void populateTimeline(){
@@ -56,7 +96,9 @@ public class TimelineActivity extends Activity {
 			@Override
 			public void onSuccess(JSONArray json) {
 				aTweets.addAll(Tweet.fromJSONArray(json));
-				Log.d("DEBUG",json.toString());
+				lvTweets.onRefreshComplete();
+				lastTweetId = tweets.get(tweets.size()-1).getId();
+				Log.d("DEBUG", tweets.get(tweets.size()-1).getBody());
 			}
 			
 			@Override
@@ -64,7 +106,7 @@ public class TimelineActivity extends Activity {
 				Log.d("DEBUG",e.toString());
 				Log.d("DEBUG",s.toString());
 			}
-		});
+		}, lastTweetId);
 	}
 	
 	public void getAccountDetails(){
@@ -94,30 +136,13 @@ public class TimelineActivity extends Activity {
     	// TODO Auto-generated method stub
     	if(requestCode ==5){
     		if(resultCode == RESULT_OK){
-    			String composeTweet = (String) data.getSerializableExtra("tweet");
-    			postTweet(composeTweet);
-    			aTweets.clear();
+    			String composeTweet = (String) data.getStringExtra("tweet");
+    			tweets.clear();
+    			lastTweetId = null;
     			populateTimeline();
-    			Log.d("HELP-SITE","Tweet is "+composeTweet);
+    			Log.d("DEBUG","Tweet is "+composeTweet);
     			//Toast.makeText(this, settings.getSize(), Toast.LENGTH_SHORT).show();
     		}
     	}
     }
-	
-	public void postTweet(String status){
-		client.postUpdateTweet(new JsonHttpResponseHandler(){
-			@Override
-			public void onSuccess(JSONObject json) {
-				currentUser = User.fromJSONToUser(json);
-				Log.d("DEBUG","USER>> "+json.toString());
-			}
-			
-			@Override
-			public void onFailure(Throwable e, String s) {
-				Log.d("DEBUG",e.toString());
-				Log.d("DEBUG",s.toString());
-			}
-		}, status);
-	}
-
 }

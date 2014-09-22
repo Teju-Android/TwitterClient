@@ -15,7 +15,7 @@
         android:name="com.tejuapp.twitterclient.TwitterApplication"
         android:allowBackup="true"
         android:icon="@drawable/twitter_logo5"
-        android:label="@string/app_name"
+        android:label="@string/twitter_title"
         android:theme="@style/AppTheme" >
         <meta-data
             android:name="AA_DB_NAME"
@@ -26,7 +26,7 @@
 
         <activity
             android:name="com.tejuapp.twitterclient.LoginActivity"
-            android:label="@string/app_name" >
+            android:label="@string/twitter_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -51,6 +51,14 @@
             android:name="com.tejuapp.twitterclient.ComposeActivity"
             android:label="@string/title_activity_compose"
             android:parentActivityName="com.tejuapp.twitterclient.TimelineActivity" >
+        </activity>
+        <activity
+            android:name="com.tejuapp.twitterclient.ViewTweetActivity"
+            android:label="@string/tweet_label"
+            android:parentActivityName="com.tejuapp.twitterclient.TimelineActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tejuapp.twitterclient.TimelineActivity" />
         </activity>
     </application>
 

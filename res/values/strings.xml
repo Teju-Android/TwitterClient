@@ -17,4 +17,8 @@
     <string name="compose_label">Compose</string>
     <string name="whats_happening_label">What\'s happening?</string>
     <string name="tweet_label">Tweet</string>
+    <string name="twitter_title">Twitter</string>
+    <string name="title_activity_view_tweet">ViewTweetActivity</string>
+    <string name="tweet_label">Tweet</string>
+
 </resources>
