@@ -20,6 +20,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:background="@drawable/tweet_false"
+        android:onClick="onTweet"
         android:text="@string/tweet_label" />
 
     <TextView

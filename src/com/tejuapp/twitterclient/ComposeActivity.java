@@ -2,11 +2,14 @@ package com.tejuapp.twitterclient;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tejuapp.twitterclient.models.User;
@@ -17,6 +20,7 @@ public class ComposeActivity extends Activity {
 	private ImageView ivProfileImage;
 	private TextView tvName;
 	private TextView tvScreenName;
+	private EditText etCompose;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +57,26 @@ public class ComposeActivity extends Activity {
 		ivProfileImage = (ImageView) findViewById(R.id.ivComposeProfileImage);
 		tvName = (TextView) findViewById(R.id.tvComposeUserName);
 		tvScreenName = (TextView) findViewById(R.id.tvComposeScreenName);
+		etCompose = (EditText) findViewById(R.id.etCompose);
+		
 		ivProfileImage.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(user.getProfileImageUrl(), ivProfileImage);
 		tvName.setText(user.getName());
 		tvScreenName.setText(user.getScreenName());
+	}
+	
+	public void onTweet(View v){
+		String tweetText = etCompose.toString();
+		if(tweetText.isEmpty()){
+			Toast.makeText(this, "Compose and Tweet", Toast.LENGTH_SHORT).show();
+		}
+		else{
+			Intent i = new Intent();
+			i.putExtra("tweet", tweetText);
+			setResult(RESULT_OK,i);
+			finish();
+		}
 	}
 
 }

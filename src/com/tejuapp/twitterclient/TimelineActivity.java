@@ -86,7 +86,38 @@ public class TimelineActivity extends Activity {
 	public void onCompose(MenuItem mi){
 		Intent i = new Intent(this, ComposeActivity.class);
 		i.putExtra("user", currentUser);
-		startActivity(i);
+		startActivityForResult(i, 5);
+	}
+	
+	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    	// TODO Auto-generated method stub
+    	if(requestCode ==5){
+    		if(resultCode == RESULT_OK){
+    			String composeTweet = (String) data.getSerializableExtra("tweet");
+    			postTweet(composeTweet);
+    			aTweets.clear();
+    			populateTimeline();
+    			Log.d("HELP-SITE","Tweet is "+composeTweet);
+    			//Toast.makeText(this, settings.getSize(), Toast.LENGTH_SHORT).show();
+    		}
+    	}
+    }
+	
+	public void postTweet(String status){
+		client.postUpdateTweet(new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(JSONObject json) {
+				currentUser = User.fromJSONToUser(json);
+				Log.d("DEBUG","USER>> "+json.toString());
+			}
+			
+			@Override
+			public void onFailure(Throwable e, String s) {
+				Log.d("DEBUG",e.toString());
+				Log.d("DEBUG",s.toString());
+			}
+		}, status);
 	}
 
 }
