@@ -14,7 +14,7 @@
     <application
         android:name="com.tejuapp.twitterclient.TwitterApplication"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/twitter_logo5"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <meta-data
@@ -46,6 +46,11 @@
         <activity
             android:name="com.tejuapp.twitterclient.TimelineActivity"
             android:label="@string/title_activity_timeline" >
+        </activity>
+        <activity
+            android:name="com.tejuapp.twitterclient.ComposeActivity"
+            android:label="@string/title_activity_compose"
+            android:parentActivityName="com.tejuapp.twitterclient.TimelineActivity" >
         </activity>
     </application>
 

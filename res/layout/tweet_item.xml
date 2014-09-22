@@ -17,8 +17,11 @@
         android:id="@+id/tvBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/tvScreenName"
         android:layout_toRightOf="@+id/ivProfileImage"
+        android:padding="2dp"
         android:text="@string/tweet_body_label" />
 
     <TextView

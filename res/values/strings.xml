@@ -13,5 +13,8 @@
     <string name="screen_name_label">\@foo</string>
     <string name="sample_datetime_label">1 1 2000</string>
     <string name="sample_label">Test String</string>
-
+    <string name="title_activity_compose">ComposeActivity</string>
+    <string name="compose_label">Compose</string>
+    <string name="whats_happening_label">What\'s happening?</string>
+    <string name="tweet_label">Tweet</string>
 </resources>

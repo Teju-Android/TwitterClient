@@ -5,9 +5,12 @@ import java.util.ArrayList;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -59,6 +62,11 @@ public class TimelineActivity extends Activity {
 				Log.d("DEBUG",s.toString());
 			}
 		});
+	}
+	
+	public void onCompose(MenuItem mi){
+		Intent i = new Intent(this, ComposeActivity.class);
+		startActivity(i);
 	}
 
 }

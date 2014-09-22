@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- the theme applied to the application or activity -->
+
+    <!-- ActionBar styles -->
+     <style name="TwitterActionBar" parent="android:Widget.ActionBar">
+        <item name="android:background">#55acee</item>
+    </style>
+</resources>
