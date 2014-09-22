@@ -3,6 +3,7 @@ package com.tejuapp.twitterclient;
 import java.util.ArrayList;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -10,13 +11,13 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tejuapp.twitterclient.adapter.TweetArrayAdapter;
 import com.tejuapp.twitterclient.models.Tweet;
+import com.tejuapp.twitterclient.models.User;
 
 public class TimelineActivity extends Activity {
 	
@@ -24,6 +25,7 @@ public class TimelineActivity extends Activity {
 	private ArrayList<Tweet> tweets;
 	private ArrayAdapter<Tweet> aTweets;
 	private ListView lvTweets;
+	private User currentUser;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,7 @@ public class TimelineActivity extends Activity {
 		setupActivity();
 		client = TwitterApplication.getRestClient();
 		populateTimeline();
+		getAccountDetails();
 	}
 
 	@Override
@@ -64,8 +67,25 @@ public class TimelineActivity extends Activity {
 		});
 	}
 	
+	public void getAccountDetails(){
+		client.getAccountDetails(new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(JSONObject json) {
+				currentUser = User.fromJSONToUser(json);
+				Log.d("DEBUG","USER>> "+json.toString());
+			}
+			
+			@Override
+			public void onFailure(Throwable e, String s) {
+				Log.d("DEBUG",e.toString());
+				Log.d("DEBUG",s.toString());
+			}
+		});
+	}
+	
 	public void onCompose(MenuItem mi){
 		Intent i = new Intent(this, ComposeActivity.class);
+		i.putExtra("user", currentUser);
 		startActivity(i);
 	}
 

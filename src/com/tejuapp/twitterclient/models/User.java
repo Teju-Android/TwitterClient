@@ -1,9 +1,15 @@
 package com.tejuapp.twitterclient.models;
 
+import java.io.Serializable;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User {
+public class User implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 9108915029551725815L;
 	private String name;
 	private long uid;
 	private String screenName;

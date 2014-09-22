@@ -3,20 +3,30 @@ package com.tejuapp.twitterclient;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tejuapp.twitterclient.models.User;
 
 public class ComposeActivity extends Activity {
 
+	private User user;
+	private ImageView ivProfileImage;
+	private TextView tvName;
+	private TextView tvScreenName;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compose);
+		user = (User) getIntent().getSerializableExtra("user");
+		
 		// Show the Up button in the action bar.
 		setupActionBar();
+		setupActivity();
 	}
 
 	/**
@@ -38,22 +48,16 @@ public class ComposeActivity extends Activity {
 		getMenuInflater().inflate(R.menu.compose, menu);
 		return true;
 	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	
+	private void setupActivity(){
+		ivProfileImage = (ImageView) findViewById(R.id.ivComposeProfileImage);
+		tvName = (TextView) findViewById(R.id.tvComposeUserName);
+		tvScreenName = (TextView) findViewById(R.id.tvComposeScreenName);
+		ivProfileImage.setImageResource(android.R.color.transparent);
+		ImageLoader imageLoader = ImageLoader.getInstance();
+		imageLoader.displayImage(user.getProfileImageUrl(), ivProfileImage);
+		tvName.setText(user.getName());
+		tvScreenName.setText(user.getScreenName());
 	}
 
 }

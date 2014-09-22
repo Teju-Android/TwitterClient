@@ -6,20 +6,12 @@
     android:paddingTop="5dp" >
 
     <ImageView
-        android:id="@+id/imageView1"
+        android:id="@+id/ivComposeProfileImage"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/tvComposeUserName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/imageView1"
-        android:text="@string/sample_label" />
 
     <Button
         android:id="@+id/btTweet"
@@ -31,11 +23,19 @@
         android:text="@string/tweet_label" />
 
     <TextView
+        android:id="@+id/tvComposeUserName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivComposeProfileImage"
+        android:text="@string/sample_label" />
+
+    <TextView
         android:id="@+id/tvComposeScreenName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView1"
-        android:layout_toRightOf="@+id/imageView1"
+        android:layout_alignBottom="@+id/ivComposeProfileImage"
+        android:layout_toRightOf="@+id/ivComposeProfileImage"
         android:text="@string/sample_label" />
 
 </RelativeLayout>
