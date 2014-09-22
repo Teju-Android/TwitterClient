@@ -31,12 +31,15 @@ public class ComposeActivity extends Activity {
 	private EditText etCompose;
 	private Button btTweet;
 	private TwitterClient client;
+	private TextView tvCharCount;
+	private int totalCount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_compose);
 		client = TwitterApplication.getRestClient();
+		totalCount = 140;
 		user = (User) getIntent().getSerializableExtra("user");
 		getActionBar().hide();
 		// Show the Up button in the action bar.
@@ -91,12 +94,14 @@ public class ComposeActivity extends Activity {
 		tvScreenName = (TextView) findViewById(R.id.tvComposeScreenName);
 		etCompose = (EditText) findViewById(R.id.etCompose);
 		btTweet = (Button) findViewById(R.id.btTweet);
+		tvCharCount = (TextView) findViewById(R.id.tvCharCount);
 		
 		ivProfileImage.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(user.getProfileImageUrl(), ivProfileImage);
 		tvName.setText(user.getName());
-		tvScreenName.setText(user.getScreenName());
+		tvScreenName.setText("@"+user.getScreenName());
+		tvCharCount.setText(totalCount+"");
 	}
 	
 	public void onTweet(View v){
@@ -124,7 +129,10 @@ public class ComposeActivity extends Activity {
 	            } 	
 	        }
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
-	        public void onTextChanged(CharSequence s, int start, int before, int count){}
+	        public void onTextChanged(CharSequence s, int start, int before, int count){
+	        	totalCount-=count;
+	        	tvCharCount.setText(totalCount+"");
+	        }
 	    }); 
 	}
 	

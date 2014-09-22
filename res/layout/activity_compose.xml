@@ -24,6 +24,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/ivComposeProfileImage"
+        android:paddingLeft="5dp"
+        android:textSize="20sp"
         android:text="@string/sample_label" />
 
     <TextView
@@ -32,6 +34,9 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/ivComposeProfileImage"
         android:layout_toRightOf="@+id/ivComposeProfileImage"
+        android:textColor="#919191"
+        android:textStyle="italic"
+        android:paddingLeft="5dp"
         android:text="@string/sample_label" />
 
     <EditText
@@ -51,5 +56,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher" />
+
+    <TextView
+        android:id="@+id/tvCharCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignRight="@+id/btTweet"
+        android:layout_below="@+id/btTweet"
+        android:text="@string/sample_label"
+        android:textColor="#A1A1A1"
+        android:textSize="10sp" />
 
 </RelativeLayout>
