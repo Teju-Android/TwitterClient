@@ -1,5 +1,6 @@
 package com.tejuapp.twitterclient.models;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -11,9 +12,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
-
-public class Tweet {
+public class Tweet implements Serializable{
+	
+	private static final long serialVersionUID = 7865554975454958010L;
 	private String body;
 	private String id;
 	private String createdAt;

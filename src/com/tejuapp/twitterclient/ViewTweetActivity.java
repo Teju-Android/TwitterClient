@@ -1,28 +1,41 @@
 package com.tejuapp.twitterclient;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
+import android.support.v4.app.NavUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NavUtils;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tejuapp.twitterclient.models.Tweet;
 
 public class ViewTweetActivity extends Activity {
 
+	private Tweet tweet;
+	private ImageView ivProfileImage;
+	private TextView tvUsername;
+	private TextView tvScreenName;
+	private TextView tvBody;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_tweet);
 		// Show the Up button in the action bar.
 		setupActionBar();
+		tweet = (Tweet) getIntent().getSerializableExtra("tweet");
+		Log.d("DEBUG","FROM VIEW ACTIVITY------> "+tweet.getUser().getName());
+		setupActivity();
 	}
 
 	/**
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -30,6 +43,22 @@ public class ViewTweetActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.view_tweet, menu);
 		return true;
+	}
+	
+	private void setupActivity(){
+		ivProfileImage = (ImageView) findViewById(R.id.ivViewProfileImage);
+		tvUsername = (TextView) findViewById(R.id.tvViewName);
+		tvScreenName = (TextView) findViewById(R.id.tvViewScreenName);
+		tvBody = (TextView) findViewById(R.id.tvViewBody);
+		
+		ivProfileImage.setImageResource(android.R.color.transparent);
+		ImageLoader imageLoader = ImageLoader.getInstance();
+		imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), ivProfileImage);
+		
+		tvUsername.setText(tweet.getUser().getName());
+		tvScreenName.setText(tweet.getUser().getScreenName());
+		tvBody.setText(tweet.getBody());
+		
 	}
 
 	@Override

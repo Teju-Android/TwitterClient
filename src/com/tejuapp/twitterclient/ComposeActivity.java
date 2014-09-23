@@ -130,8 +130,8 @@ public class ComposeActivity extends Activity {
 	        }
 	        public void beforeTextChanged(CharSequence s, int start, int count, int after){}
 	        public void onTextChanged(CharSequence s, int start, int before, int count){
-	        	totalCount-=count;
-	        	tvCharCount.setText(totalCount+"");
+	        	String tweet = etCompose.getText().toString();
+	        	tvCharCount.setText(totalCount-tweet.length()+"");
 	        }
 	    }); 
 	}

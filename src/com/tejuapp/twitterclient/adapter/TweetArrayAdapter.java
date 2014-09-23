@@ -3,8 +3,10 @@ package com.tejuapp.twitterclient.adapter;
 import java.util.List;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -12,17 +14,21 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tejuapp.twitterclient.R;
+import com.tejuapp.twitterclient.ViewTweetActivity;
 import com.tejuapp.twitterclient.models.Tweet;
 
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
+	Tweet tweet;
+	private Context context;
 	public TweetArrayAdapter(Context context, List<Tweet> objects) {
 		super(context, 0, objects);
+		this.context = context;
 	}
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		Tweet tweet = getItem(position);
+		tweet = getItem(position);
 		if(convertView == null){
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.tweet_item, parent,false);
 		}
@@ -41,6 +47,20 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		tvBody.setText(tweet.getBody());
 		tvDiffTime.setText(tweet.getDiff());
 		tvUserName.setText(tweet.getUser().getName());
+		
+		convertView.setOnClickListener(new OnClickListener() {
+            void onClick() {
+            	
+            }
+
+			@Override
+			public void onClick(View v) {
+				Intent i= new Intent(context, ViewTweetActivity.class);
+                i.putExtra("tweet",tweet);
+                context.startActivity(i);
+				
+			}
+        });
 		return convertView;
 	}
 
