@@ -10,36 +10,21 @@
 
     <ImageView
         android:id="@+id/ivViewProfileImage"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:src="@drawable/ic_launcher" />
-
-    <TextView
-        android:id="@+id/tvViewName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignTop="@+id/ivViewProfileImage"
-        android:layout_toRightOf="@+id/ivViewProfileImage"
-        android:text="@string/sample_label" />
-
-    <TextView
-        android:id="@+id/tvViewScreenName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/tvViewName"
-        android:layout_toRightOf="@+id/ivViewProfileImage"
-        android:text="@string/sample_label" />
 
     <TextView
         android:id="@+id/tvViewBody"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
+        android:paddingTop="20dp"
         android:layout_alignParentRight="true"
+        android:textColor="#4D4D4D"
+        android:textSize="25sp"
         android:layout_below="@+id/ivViewProfileImage"
         android:text="@string/sample_label" />
 
@@ -50,6 +35,35 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/tvViewBody"
+        android:textColor="#919191"
+        android:paddingTop="5dp"
         android:text="@string/sample_label" />
+
+    <TextView
+        android:id="@+id/tvViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/ivViewProfileImage"
+        android:gravity="left"
+        android:paddingLeft="15dp"
+        android:text="@string/sample_label"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvViewScreenName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+         android:paddingLeft="15dp"
+        android:layout_alignBottom="@+id/ivViewProfileImage"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/ivViewProfileImage"
+        android:gravity="left"
+        android:text="@string/sample_label"
+        android:textColor="#919191"
+        android:textSize="18sp"
+        android:textStyle="italic" />
 
 </RelativeLayout>

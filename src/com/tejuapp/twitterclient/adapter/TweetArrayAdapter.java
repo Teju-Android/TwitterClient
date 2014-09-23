@@ -19,7 +19,6 @@ import com.tejuapp.twitterclient.models.Tweet;
 
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 
-	Tweet tweet;
 	private Context context;
 	public TweetArrayAdapter(Context context, List<Tweet> objects) {
 		super(context, 0, objects);
@@ -28,7 +27,7 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 	
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		tweet = getItem(position);
+		final Tweet tweet = getItem(position);
 		if(convertView == null){
 			convertView = LayoutInflater.from(getContext()).inflate(R.layout.tweet_item, parent,false);
 		}

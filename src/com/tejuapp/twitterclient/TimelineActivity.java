@@ -12,8 +12,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
@@ -145,4 +143,11 @@ public class TimelineActivity extends Activity {
     		}
     	}
     }
+	
+	public void onLogout(MenuItem mi){
+		client.clearAccessToken();
+		Intent i = new Intent(this, LoginActivity.class);
+		startActivity(i);
+		finish();
+	}
 }

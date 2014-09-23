@@ -20,5 +20,6 @@
     <string name="twitter_title">Twitter</string>
     <string name="title_activity_view_tweet">ViewTweetActivity</string>
     <string name="tweet_label">Tweet</string>
+    <string name="logout_label">Logout</string>
 
 </resources>

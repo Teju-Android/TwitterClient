@@ -19,6 +19,7 @@ public class ViewTweetActivity extends Activity {
 	private TextView tvUsername;
 	private TextView tvScreenName;
 	private TextView tvBody;
+	private TextView tvTimestamp;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -50,14 +51,16 @@ public class ViewTweetActivity extends Activity {
 		tvUsername = (TextView) findViewById(R.id.tvViewName);
 		tvScreenName = (TextView) findViewById(R.id.tvViewScreenName);
 		tvBody = (TextView) findViewById(R.id.tvViewBody);
+		tvTimestamp = (TextView) findViewById(R.id.tvViewTimestamp);
 		
 		ivProfileImage.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), ivProfileImage);
 		
 		tvUsername.setText(tweet.getUser().getName());
-		tvScreenName.setText(tweet.getUser().getScreenName());
+		tvScreenName.setText("@"+tweet.getUser().getScreenName());
 		tvBody.setText(tweet.getBody());
+		tvTimestamp.setText(tweet.getCreatedAt());
 		
 	}
 
@@ -76,6 +79,12 @@ public class ViewTweetActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	@Override
+	public void onBackPressed() {
+		finish();
+		return;
 	}
 
 }
