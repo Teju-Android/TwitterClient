@@ -65,7 +65,7 @@ public class TimelineActivity extends Activity {
                 // once the network request has completed successfully.
             	tweets.clear();
             	lastTweetId = null;
-                populateTimeline();
+                populateTimeline(true);
             }
         });
 		
@@ -77,16 +77,6 @@ public class TimelineActivity extends Activity {
 		    	populateTimeline();
 		    }
 		});
-		
-		/*lvTweets.setOnClickListener(new OnClickListener(){
-			@Override
-	        public void onClick(View v) {
-				Intent i = new Intent(getBaseContext(), ViewTweetActivity.class);
-	      		i.putExtra("tweet", this.);
-	      		startActivityForResult(i, 5);
-	              
-	          }
-		});*/
 	}
 	
 	public void populateTimeline(){
@@ -94,7 +84,24 @@ public class TimelineActivity extends Activity {
 			@Override
 			public void onSuccess(JSONArray json) {
 				aTweets.addAll(Tweet.fromJSONArray(json));
+				lastTweetId = tweets.get(tweets.size()-1).getId();
+				Log.d("DEBUG", tweets.get(tweets.size()-1).getBody());
+			}
+			
+			@Override
+			public void onFailure(Throwable e, String s) {
+				Log.d("DEBUG",e.toString());
+				Log.d("DEBUG",s.toString());
+			}
+		}, lastTweetId);
+	}
+	
+	public void populateTimeline(boolean onPullToRefresh){
+		client.getHomeTimeline(new JsonHttpResponseHandler(){
+			@Override
+			public void onSuccess(JSONArray json) {
 				lvTweets.onRefreshComplete();
+				aTweets.addAll(Tweet.fromJSONArray(json));
 				lastTweetId = tweets.get(tweets.size()-1).getId();
 				Log.d("DEBUG", tweets.get(tweets.size()-1).getBody());
 			}
