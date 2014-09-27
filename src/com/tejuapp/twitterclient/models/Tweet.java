@@ -12,13 +12,27 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Column.ForeignKeyAction;
+import com.activeandroid.annotation.Table;
+
+@Table(name = "Tweet")
 public class Tweet implements Serializable{
 	
 	private static final long serialVersionUID = 7865554975454958010L;
+	@Column(name = "body")
 	private String body;
+	
+	@Column(name = "id", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
 	private String id;
+	
+	@Column(name = "createdAt")
 	private String createdAt;
+	
+	@Column(name = "user", onUpdate = ForeignKeyAction.CASCADE, onDelete = ForeignKeyAction.CASCADE)
 	private User user;
+	
+	@Column(name = "timestamp") 
 	private Date timestamp;
 	private String diff;
 	
@@ -46,6 +60,7 @@ public class Tweet implements Serializable{
 	}
 	public void setUser(User user) {
 		this.user = user;
+		user.save();
 	}
 	
 	public Date getTimestamp() {
@@ -53,6 +68,10 @@ public class Tweet implements Serializable{
 	}
 	public void setTimestamp(Timestamp timestamp) {
 		this.timestamp = timestamp;
+	}
+	
+	public Tweet(){
+		super();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -105,13 +124,6 @@ public class Tweet implements Serializable{
 	      return tweets;
 	}
 	
-	@Override
-	public String toString() {
-		if(getUser()!=null)
-			return getBody()+" - "+getUser().getScreenName();
-		else
-			return getBody()+" - NO USER";
-	}
 	public String getDiff() {
 		return diff;
 	}

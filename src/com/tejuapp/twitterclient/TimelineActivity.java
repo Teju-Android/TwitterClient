@@ -65,7 +65,7 @@ public class TimelineActivity extends Activity {
                 // once the network request has completed successfully.
             	tweets.clear();
             	lastTweetId = null;
-                populateTimeline(true);
+                populateTimeline();
             }
         });
 		
@@ -80,23 +80,6 @@ public class TimelineActivity extends Activity {
 	}
 	
 	public void populateTimeline(){
-		client.getHomeTimeline(new JsonHttpResponseHandler(){
-			@Override
-			public void onSuccess(JSONArray json) {
-				aTweets.addAll(Tweet.fromJSONArray(json));
-				lastTweetId = tweets.get(tweets.size()-1).getId();
-				Log.d("DEBUG", tweets.get(tweets.size()-1).getBody());
-			}
-			
-			@Override
-			public void onFailure(Throwable e, String s) {
-				Log.d("DEBUG",e.toString());
-				Log.d("DEBUG",s.toString());
-			}
-		}, lastTweetId);
-	}
-	
-	public void populateTimeline(boolean onPullToRefresh){
 		client.getHomeTimeline(new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess(JSONArray json) {
@@ -119,7 +102,6 @@ public class TimelineActivity extends Activity {
 			@Override
 			public void onSuccess(JSONObject json) {
 				currentUser = User.fromJSONToUser(json);
-				Log.d("DEBUG","USER>> "+json.toString());
 			}
 			
 			@Override

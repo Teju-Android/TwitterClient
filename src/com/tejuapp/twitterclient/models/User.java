@@ -5,15 +5,28 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+
+@Table(name = "User")
 public class User implements Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 9108915029551725815L;
 	private String name;
+	
+	@Column(name = "uid", unique = true)
 	private long uid;
+	
+	@Column(name = "screenName")
 	private String screenName;
+	
+	@Column(name = "profileImageUrl")
 	private String profileImageUrl;
+	
+	public User(){
+		super();
+	}
 
 	public static User fromJSONToUser(JSONObject json) {
 		User u = new User();
