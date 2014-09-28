@@ -1,4 +1,4 @@
-package com.tejuapp.twitterclient;
+package com.tejuapp.twitterclient.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,9 @@ import android.view.View;
 
 import com.codepath.oauth.OAuthLoginActivity;
 import com.tejuapp.twitterclient.R;
+import com.tejuapp.twitterclient.TwitterClient;
+import com.tejuapp.twitterclient.R.layout;
+import com.tejuapp.twitterclient.R.menu;
 
 public class LoginActivity extends OAuthLoginActivity<TwitterClient> {
 

@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tejuapp.twitterclient.R;
-import com.tejuapp.twitterclient.ViewTweetActivity;
+import com.tejuapp.twitterclient.activities.ViewTweetActivity;
 import com.tejuapp.twitterclient.models.Tweet;
 
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
