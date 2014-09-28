@@ -1,4 +1,4 @@
-package com.tejuapp.twitterclient;
+package com.tejuapp.twitterclient.activities;
 
 import org.json.JSONObject;
 
@@ -20,6 +20,13 @@ import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tejuapp.twitterclient.R;
+import com.tejuapp.twitterclient.TwitterApplication;
+import com.tejuapp.twitterclient.TwitterClient;
+import com.tejuapp.twitterclient.R.drawable;
+import com.tejuapp.twitterclient.R.id;
+import com.tejuapp.twitterclient.R.layout;
+import com.tejuapp.twitterclient.R.menu;
 import com.tejuapp.twitterclient.models.User;
 
 public class ComposeActivity extends Activity {

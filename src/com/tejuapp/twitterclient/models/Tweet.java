@@ -12,6 +12,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class Tweet implements Serializable{
 	
 	private static final long serialVersionUID = 7865554975454958010L;
@@ -87,6 +89,7 @@ public class Tweet implements Serializable{
 	}
 	public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
+		Log.d("DEBUG","Thnumber of tweets got is :"+jsonArray.length());
 	      // Process each result in json array, decode and convert to business object
 	      for (int i=0; i < jsonArray.length(); i++) {
 	          JSONObject json = null;

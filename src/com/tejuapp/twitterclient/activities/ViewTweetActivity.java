@@ -1,4 +1,4 @@
-package com.tejuapp.twitterclient;
+package com.tejuapp.twitterclient.activities;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -10,6 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
+import com.tejuapp.twitterclient.R;
+import com.tejuapp.twitterclient.R.id;
+import com.tejuapp.twitterclient.R.layout;
+import com.tejuapp.twitterclient.R.menu;
 import com.tejuapp.twitterclient.models.Tweet;
 
 public class ViewTweetActivity extends Activity {
