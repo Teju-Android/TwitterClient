@@ -41,8 +41,9 @@ private TwitterClient client;
                 // Your code to refresh the list here.
                 // Make sure you call listView.onRefreshComplete() when
                 // once the network request has completed successfully.
-            	tweets.clear();
+            	aTweets.clear();
             	lastMentionTweetId = null;
+            	enableMenionsTimelineRequest = true;
                 populateTimeline();
             }
         });
@@ -52,7 +53,9 @@ private TwitterClient client;
 		    public void onLoadMore(int page, int totalItemsCount) {
 	                // Triggered only when new data needs to be appended to the list
 	                // Add whatever code is needed to append new items to your AdapterView
-		    	populateTimeline();
+		    	if(enableMenionsTimelineRequest){
+		    		populateTimeline();
+		    	}
 		    }
 		});
 	}
@@ -62,7 +65,10 @@ private TwitterClient client;
 			@Override
 			public void onSuccess(JSONArray json) {
 				lvTweets.onRefreshComplete();
+				int old_tweets_number = tweets.size();
 				addAll(Tweet.fromJSONArray(json));
+				int fetchedTweetCount = tweets.size() - old_tweets_number;
+				setEnableMentionsRequest(fetchedTweetCount);
 				lastMentionTweetId = tweets.get(tweets.size()-1).getId();
 				Log.d("DEBUG", tweets.get(tweets.size()-1).getBody());
 			}
@@ -74,6 +80,12 @@ private TwitterClient client;
 			}
 			
 		}, lastMentionTweetId);
+	}
+	
+	private void setEnableMentionsRequest(int tweetsGained){
+		if(tweetsGained < DEFAULT_TWEET_COUNT){
+			enableMenionsTimelineRequest = false;
+		}
 	}
 
 }

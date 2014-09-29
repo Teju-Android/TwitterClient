@@ -53,12 +53,20 @@
             android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
         </activity>
         <activity
-     		android:name="com.tejuapp.twitterclient.activities.ViewTweetActivity"
+            android:name="com.tejuapp.twitterclient.activities.ViewTweetActivity"
             android:label="@string/tweet_label"
-       		android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
+            android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tejuapp.twitterclient.TimelineActivity" />
+        </activity>
+        <activity
+            android:name="com.tejuapp.twitterclient.ViewProfileActivity"
+            android:label="@string/title_activity_view_profile"
+            android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tejuapp.twitterclient.activities.TimelineActivity" />
         </activity>
     </application>
 

@@ -89,7 +89,7 @@ public class Tweet implements Serializable{
 	}
 	public static ArrayList<Tweet> fromJSONArray(JSONArray jsonArray) {
 		ArrayList<Tweet> tweets = new ArrayList<Tweet>(jsonArray.length());
-		Log.d("DEBUG","Thnumber of tweets got is :"+jsonArray.length());
+		Log.d("DEBUG","The number of tweets got is :"+jsonArray.length());
 	      // Process each result in json array, decode and convert to business object
 	      for (int i=0; i < jsonArray.length(); i++) {
 	          JSONObject json = null;
