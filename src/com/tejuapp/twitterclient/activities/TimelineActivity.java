@@ -1,34 +1,24 @@
 package com.tejuapp.twitterclient.activities;
 
-import java.util.ArrayList;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
-import android.app.Activity;
+import android.app.ActionBar.Tab;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tejuapp.twitterclient.R;
 import com.tejuapp.twitterclient.TwitterApplication;
 import com.tejuapp.twitterclient.TwitterClient;
-import com.tejuapp.twitterclient.R.layout;
-import com.tejuapp.twitterclient.R.menu;
-import com.tejuapp.twitterclient.adapter.TweetArrayAdapter;
-import com.tejuapp.twitterclient.fragments.TweetsListFragment;
-import com.tejuapp.twitterclient.listener.EndlessScrollListener;
-import com.tejuapp.twitterclient.models.Tweet;
+import com.tejuapp.twitterclient.fragments.HomeTimelineFragment;
+import com.tejuapp.twitterclient.fragments.MentionsTimelineFragment;
+import com.tejuapp.twitterclient.listener.FragmentTabListener;
 import com.tejuapp.twitterclient.models.User;
-
-import eu.erikw.PullToRefreshListView;
-import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class TimelineActivity extends FragmentActivity {
 	
@@ -40,9 +30,7 @@ public class TimelineActivity extends FragmentActivity {
 		super.onCreate(savedInstanceState);
 		client = TwitterApplication.getRestClient();
 		setContentView(R.layout.activity_timeline);
-		
-		ActionBar actionBar = getActionBar();
-	    actionBar.setDisplayShowTitleEnabled(false);
+		setupTabs();
 
 //		populateTimeline();
 		getAccountDetails();
@@ -97,5 +85,32 @@ public class TimelineActivity extends FragmentActivity {
 		Intent i = new Intent(this, LoginActivity.class);
 		startActivity(i);
 		finish();
+	}
+	
+	private void setupTabs() {
+		ActionBar actionBar = getActionBar();
+		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+		actionBar.setDisplayShowTitleEnabled(false);
+
+		Tab homeTab = actionBar
+			.newTab()
+			.setIcon(R.drawable.ic_home)
+			.setTag("HomeTimelineFragment")
+			.setTabListener(
+				new FragmentTabListener<HomeTimelineFragment>(R.id.flContainer, this, "first",
+								HomeTimelineFragment.class));
+
+		actionBar.addTab(homeTab);
+		actionBar.selectTab(homeTab);
+
+		Tab mentionsTab = actionBar
+			.newTab()
+			.setIcon(R.drawable.ic_home)
+			.setTag("MentionsTimelineFragment")
+			.setTabListener(
+			    new FragmentTabListener<MentionsTimelineFragment>(R.id.flContainer, this, "second",
+								MentionsTimelineFragment.class));
+
+		actionBar.addTab(mentionsTab);
 	}
 }

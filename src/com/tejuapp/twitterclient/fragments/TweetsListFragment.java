@@ -30,6 +30,10 @@ public class TweetsListFragment extends Fragment {
 	protected ArrayAdapter<Tweet> aTweets;
 	protected String lastTweetId=null;
 	protected String lastMentionTweetId=null;
+	protected boolean enableHomeTimelineRequest = true;
+	protected boolean enableMenionsTimelineRequest = true;
+	protected final int DEFAULT_TWEET_COUNT = 20;
+	
 	View view;
 	
 	@Override
