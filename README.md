@@ -16,6 +16,8 @@ The features that are implemented are:
 <li> User can refresh tweets timeline by pulling down to refresh</li>
 <li> User can tap a tweet to display a "detailed" view of that tweet </li>
 <li> Improve the user interface and theme the app to feel twitter branded </li>
+<li> User can switch between Timeline and Mention views using tabs </li>
+
 </ol>
 
 ![GIF](twitterClient2.gif)
