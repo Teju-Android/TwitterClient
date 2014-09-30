@@ -20,4 +20,6 @@ The features that are implemented are:
 
 </ol>
 
+![GIF](twitterClient3.gif)
+
 ![GIF](twitterClient2.gif)
