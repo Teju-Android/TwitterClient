@@ -3,19 +3,18 @@ package com.tejuapp.twitterclient.fragments;
 import org.json.JSONArray;
 
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
-import com.tejuapp.twitterclient.R;
 import com.tejuapp.twitterclient.TwitterApplication;
 import com.tejuapp.twitterclient.TwitterClient;
 import com.tejuapp.twitterclient.listener.EndlessScrollListener;
 import com.tejuapp.twitterclient.models.Tweet;
-
-import eu.erikw.PullToRefreshListView.OnRefreshListener;
 
 public class HomeTimelineFragment extends TweetsListFragment {
 	
@@ -37,16 +36,18 @@ public class HomeTimelineFragment extends TweetsListFragment {
 	}
 	
 	private void setListeners(){
+		
 		setOnRefreshListenerForTweets(new OnRefreshListener() {
             @Override
             public void onRefresh() {
                 // Your code to refresh the list here.
-                // Make sure you call listView.onRefreshComplete() when
+                // Make sure you call swipeContainer.setRefreshing(false)
                 // once the network request has completed successfully.
-            	tweets.clear();
+            	aTweets.clear();
             	lastTweetId = null;
+            	firstTweetId=Long.MIN_VALUE;
                 populateTimeline();
-            }
+            } 
         });
 		
 		setOnScrollListenerForTweets(new EndlessScrollListener() {
@@ -60,13 +61,25 @@ public class HomeTimelineFragment extends TweetsListFragment {
 	}
 	
 	public void populateTimeline(){
+		String max_id=null;
+		String since_id=null;
+		if(lastTweetId!=null){
+			max_id = lastTweetId.toString();
+		}
+		
+		if(firstTweetId!=Long.MIN_VALUE){
+			since_id = firstTweetId.toString();
+		}
+		
+				
 		client.getHomeTimeline(new JsonHttpResponseHandler(){
 			@Override
 			public void onSuccess(JSONArray json) {
-				lvTweets.onRefreshComplete();
 				addAll(Tweet.fromJSONArray(json));
 				lastTweetId = tweets.get(tweets.size()-1).getId();
+				firstTweetId = tweets.get(0).getId();
 				Log.d("DEBUG", tweets.get(tweets.size()-1).getBody());
+				swipeContainer.setRefreshing(false);
 			}
 			
 			@Override
@@ -74,7 +87,11 @@ public class HomeTimelineFragment extends TweetsListFragment {
 				Log.d("DEBUG",e.toString());
 				Log.d("DEBUG",s.toString());
 			}
-		}, lastTweetId);
+			@Override
+			protected void handleFailureMessage(Throwable arg0, String arg1) {
+				Toast.makeText(getActivity(), "Network Request Failure", Toast.LENGTH_SHORT).show();
+			}
+		}, max_id, since_id);
 	}
 	
 

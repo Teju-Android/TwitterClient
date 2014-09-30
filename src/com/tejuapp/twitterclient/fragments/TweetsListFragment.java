@@ -2,37 +2,34 @@ package com.tejuapp.twitterclient.fragments;
 
 import java.util.ArrayList;
 
-import org.json.JSONArray;
-
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v4.widget.SwipeRefreshLayout.OnRefreshListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
-import com.loopj.android.http.JsonHttpResponseHandler;
 import com.tejuapp.twitterclient.R;
-import com.tejuapp.twitterclient.TwitterApplication;
-import com.tejuapp.twitterclient.TwitterClient;
 import com.tejuapp.twitterclient.adapter.TweetArrayAdapter;
 import com.tejuapp.twitterclient.listener.EndlessScrollListener;
 import com.tejuapp.twitterclient.models.Tweet;
 
-import eu.erikw.PullToRefreshListView;
-import eu.erikw.PullToRefreshListView.OnRefreshListener;
-
 public class TweetsListFragment extends Fragment {
 	
-	protected PullToRefreshListView lvTweets;
+	protected ListView lvTweets;
 	protected ArrayList<Tweet> tweets;
 	protected ArrayAdapter<Tweet> aTweets;
-	protected String lastTweetId=null;
-	protected String lastMentionTweetId=null;
+	protected Long lastTweetId=null;
+	protected Long firstTweetId=Long.MIN_VALUE;
+	protected Long lastMentionTweetId=null;
+	protected Long firstMentionTweetId=Long.MIN_VALUE;
 	protected boolean enableHomeTimelineRequest = true;
-	protected boolean enableMenionsTimelineRequest = true;
+	protected boolean enableMentionsTimelineRequest = true;
 	protected final int DEFAULT_TWEET_COUNT = 20;
+	protected SwipeRefreshLayout swipeContainer;
 	
 	View view;
 	
@@ -56,16 +53,21 @@ public class TweetsListFragment extends Fragment {
 	}
 	
 	private void setupView(){
-		lvTweets = (PullToRefreshListView) view.findViewById(R.id.lvTweets);
+		lvTweets = (ListView) view.findViewById(R.id.lvTweets);
 		lvTweets.setAdapter(aTweets);
+		swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
 	}
 	
-	public void addAll(ArrayList<Tweet> tweets){
+	public void addAll(ArrayList<Tweet> new_tweets){
+		ArrayList<Tweet> add_tweets = new ArrayList<Tweet>();
+		add_tweets.addAll(new_tweets);
+		add_tweets.addAll(tweets);
+		tweets = add_tweets;	
 		aTweets.addAll(tweets);
 	}
 	
 	protected void setOnRefreshListenerForTweets(OnRefreshListener onRefreshListener){
-		lvTweets.setOnRefreshListener(onRefreshListener);
+		swipeContainer.setOnRefreshListener(onRefreshListener);
 	}
 	
 	protected void setOnScrollListenerForTweets(EndlessScrollListener endlessScrollListener){

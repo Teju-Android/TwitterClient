@@ -33,13 +33,17 @@ public class TwitterClient extends OAuthBaseClient {
 		super(context, REST_API_CLASS, REST_URL, REST_CONSUMER_KEY, REST_CONSUMER_SECRET, REST_CALLBACK_URL);
 	}
 	
-	public void getHomeTimeline(AsyncHttpResponseHandler handler, String lastTweetId){
+	public void getHomeTimeline(AsyncHttpResponseHandler handler, String maxId, String since_id){
 		String homelineUrl = getApiUrl("statuses/home_timeline.json");
 		RequestParams params = new RequestParams();
-		if(lastTweetId != null){
-			params.put("max_id",lastTweetId);
+		if(maxId != null){
+			params.put("max_id",maxId);
 		}
-		params.put("since_id","1");
+		if(since_id != null){
+			params.put("since_id",since_id);
+		}
+		
+		Log.d("DEBUG","The Url is "+homelineUrl+" and max_id is "+maxId+" and since id is "+since_id);
 		client.get(homelineUrl, params, handler);
 	}
 	
@@ -56,15 +60,19 @@ public class TwitterClient extends OAuthBaseClient {
 		client.post(tweetUrl, params, handler);
 	}
 	
-	public void getMentionsTimeline(AsyncHttpResponseHandler handler, String lastTweetId){
+	public void getMentionsTimeline(AsyncHttpResponseHandler handler, String maxId, String since_id){
 		String timelineUrl = getApiUrl("statuses/mentions_timeline.json");
 		RequestParams params = new RequestParams();
-		if(lastTweetId != null){
-			params.put("max_id",lastTweetId);
+		if(maxId != null){
+			params.put("max_id",maxId);
 		}
-		params.put("since_id","1");
+		if(since_id != null){
+			params.put("since_id",since_id);
+		}
 		client.get(timelineUrl, params, handler);
 	}
+	
+	
 
 	/*// CHANGE THIS
 	// DEFINE METHODS for different API endpoints here

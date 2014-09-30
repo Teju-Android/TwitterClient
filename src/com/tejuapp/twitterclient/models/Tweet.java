@@ -14,13 +14,28 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class Tweet implements Serializable{
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Column.ForeignKeyAction;
+import com.activeandroid.annotation.Table;
+
+@Table(name = "Tweet")
+public class Tweet extends Model implements Serializable{
 	
 	private static final long serialVersionUID = 7865554975454958010L;
+	@Column(name = "body")
 	private String body;
-	private String id;
+	
+	@Column(name = "tid", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+	private long tid;
+	
+	@Column(name = "createdAt")
 	private String createdAt;
+	
+	@Column(name = "user", onUpdate = ForeignKeyAction.CASCADE, onDelete = ForeignKeyAction.CASCADE)
 	private User user;
+	
+	@Column(name = "timestamp")
 	private Date timestamp;
 	private String diff;
 	
@@ -30,12 +45,7 @@ public class Tweet implements Serializable{
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	
 	public String getCreatedAt() {
 		return createdAt;
 	}
@@ -62,7 +72,7 @@ public class Tweet implements Serializable{
 		Tweet tweet = new Tweet();
 		try {
 			tweet.body = json.getString("text");
-			tweet.id = json.getString("id_str");
+			tweet.tid = json.getLong("id_str");
 			tweet.createdAt = json.getString("created_at");
 			tweet.user = User.fromJSONToUser(json.getJSONObject("user"));
 			tweet.timestamp = new SimpleDateFormat("E MMM dd hh:mm:ss z yyyy").parse(tweet.createdAt);
@@ -74,6 +84,7 @@ public class Tweet implements Serializable{
 			e.printStackTrace();
 			return null;
 		}
+		tweet.save();
 		return tweet;
 	}
 	
@@ -108,18 +119,15 @@ public class Tweet implements Serializable{
 	      return tweets;
 	}
 	
-	@Override
-	public String toString() {
-		if(getUser()!=null)
-			return getBody()+" - "+getUser().getScreenName();
-		else
-			return getBody()+" - NO USER";
-	}
 	public String getDiff() {
 		return diff;
 	}
 	public void setDiff(String diff) {
 		this.diff = diff;
+	}
+	
+	public Tweet(){
+		super();	
 	}
 	
 	

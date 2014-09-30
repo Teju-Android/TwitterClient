@@ -5,14 +5,23 @@ import java.io.Serializable;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class User implements Serializable{
-	/**
-	 * 
-	 */
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+@Table(name = "User")
+public class User extends Model implements Serializable{
+	
 	private static final long serialVersionUID = 9108915029551725815L;
 	private String name;
+	
+	@Column(name = "uid",  unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
 	private long uid;
+	
+	@Column(name = "screenName")
 	private String screenName;
+	
+	@Column(name = "profileImageUrl")
 	private String profileImageUrl;
 
 	public static User fromJSONToUser(JSONObject json) {
@@ -22,10 +31,12 @@ public class User implements Serializable{
 			u.uid = json.getLong("id");
 			u.screenName = json.getString("screen_name");
 			u.profileImageUrl = json.getString("profile_image_url");
+			
 		} catch (JSONException e) {
 			e.printStackTrace();
 			return null;
 		}
+		u.save();
 		return u;
 	}
 
@@ -59,6 +70,10 @@ public class User implements Serializable{
 
 	public void setProfileImageUrl(String profileImageUrl) {
 		this.profileImageUrl = profileImageUrl;
+	}
+	
+	public User(){
+		super();
 	}
 
 }

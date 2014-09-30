@@ -48,7 +48,6 @@ public class TimelineActivity extends FragmentActivity {
 			@Override
 			public void onSuccess(JSONObject json) {
 				currentUser = User.fromJSONToUser(json);
-				Log.d("DEBUG","USER>> "+json.toString());
 			}
 			
 			@Override
