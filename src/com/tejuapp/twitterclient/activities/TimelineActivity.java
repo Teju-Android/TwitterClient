@@ -105,7 +105,7 @@ public class TimelineActivity extends FragmentActivity {
 
 		Tab mentionsTab = actionBar
 			.newTab()
-			.setIcon(R.drawable.ic_home)
+			.setIcon(R.drawable.mentions2)
 			.setTag("MentionsTimelineFragment")
 			.setTabListener(
 			    new FragmentTabListener<MentionsTimelineFragment>(R.id.flContainer, this, "second",
