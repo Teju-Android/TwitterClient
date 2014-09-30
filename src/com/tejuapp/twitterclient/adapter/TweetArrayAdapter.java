@@ -14,7 +14,8 @@ import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.tejuapp.twitterclient.R;
-import com.tejuapp.twitterclient.ViewTweetActivity;
+import com.tejuapp.twitterclient.ViewProfileActivity;
+import com.tejuapp.twitterclient.activities.ViewTweetActivity;
 import com.tejuapp.twitterclient.models.Tweet;
 
 public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
@@ -40,6 +41,19 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 		ivProfileImage.setImageResource(android.R.color.transparent);
 		ImageLoader imageLoader = ImageLoader.getInstance();
 		
+		ivProfileImage.setOnClickListener(new OnClickListener() {
+            void onClick() {
+            	
+            }
+
+			@Override
+			public void onClick(View v) {
+				Intent i= new Intent(context, ViewProfileActivity.class);
+                i.putExtra("user",tweet.getUser());
+                context.startActivity(i);
+			}
+        });
+		
 		//populate the tweets with data
 		imageLoader.displayImage(tweet.getUser().getProfileImageUrl(), ivProfileImage);
 		tvScreenName.setText("@"+tweet.getUser().getScreenName());
@@ -57,7 +71,6 @@ public class TweetArrayAdapter extends ArrayAdapter<Tweet> {
 				Intent i= new Intent(context, ViewTweetActivity.class);
                 i.putExtra("tweet",tweet);
                 context.startActivity(i);
-				
 			}
         });
 		return convertView;

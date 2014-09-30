@@ -25,7 +25,7 @@
             android:value="1" />
 
         <activity
-            android:name="com.tejuapp.twitterclient.LoginActivity"
+            android:name="com.tejuapp.twitterclient.activities.LoginActivity"
             android:label="@string/twitter_title" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,21 +44,29 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.tejuapp.twitterclient.TimelineActivity"
+            android:name="com.tejuapp.twitterclient.activities.TimelineActivity"
             android:label="@string/title_activity_timeline" >
         </activity>
         <activity
-            android:name="com.tejuapp.twitterclient.ComposeActivity"
+            android:name="com.tejuapp.twitterclient.activities.ComposeActivity"
             android:label="@string/title_activity_compose"
-            android:parentActivityName="com.tejuapp.twitterclient.TimelineActivity" >
+            android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
         </activity>
         <activity
-            android:name="com.tejuapp.twitterclient.ViewTweetActivity"
+            android:name="com.tejuapp.twitterclient.activities.ViewTweetActivity"
             android:label="@string/tweet_label"
-            android:parentActivityName="com.tejuapp.twitterclient.TimelineActivity" >
+            android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tejuapp.twitterclient.TimelineActivity" />
+        </activity>
+        <activity
+            android:name="com.tejuapp.twitterclient.ViewProfileActivity"
+            android:label="@string/title_activity_view_profile"
+            android:parentActivityName="com.tejuapp.twitterclient.activities.TimelineActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tejuapp.twitterclient.activities.TimelineActivity" />
         </activity>
     </application>
 
